@@ -88,13 +88,13 @@
       userList.on('updated', function(list) {
         if (list.matchingItems.length === 0) {
           $(list.list).append(noItems);
-        } else {
-          noItems.detach();
         }
       });
     }
   };
 
   searchFilter.init();
+
+  window.searchFilter = searchFilter;
 
 })();
