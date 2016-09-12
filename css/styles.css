@@ -12,7 +12,7 @@ body {
 
 .container {
   margin: 0 auto;
-  width: 750px;
+  width: 800px;
   background: #444753;
   border-radius: 5px;
 }
@@ -60,7 +60,7 @@ body {
 }
 
 .chat {
-  width: 490px;
+  width: 540px;
   float: left;
   background: #edf1f4;
   border-top-right-radius: 5px;
@@ -97,6 +97,7 @@ body {
   margin-top: 12px;
 }
 .chat .chat-history {
+  background: red;
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
@@ -143,6 +144,7 @@ body {
   left: 93%;
 }
 .chat .chat-message {
+  background: green;
   padding: 30px;
 }
 .chat .chat-message textarea {
