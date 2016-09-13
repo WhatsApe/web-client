@@ -14,3 +14,15 @@ $(document).ready(function() {
       $('#disconnect').hide();
     });
 });
+
+
+$(window).unload(function() {
+  ChatObj.connection.sync = true;
+  var msg = $pres({
+    to: settings.room,
+    type: 'unavailable'
+  });
+  ChatObj.connection.send(msg);
+  ChatObj.connection.flush();
+  ChatObj.connection.disconnect();
+});

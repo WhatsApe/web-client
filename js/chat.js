@@ -14,18 +14,21 @@ var ChatObj = {
 
       var jid_id = ChatObj.jid_to_id(jid);
 
+
       var contact = $('<li class="clearfix" id="' + jid_id + '">' +
                       '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />' +
                       '<div class="about">' +
                       '<div class="name">' + name + '</div>' +
                       '<div class="status">' +
-                      '<i class="fa fa-circle offline"></i> offline' +
+                      '<i class="fa fa-circle offline"></i>' +
+                      '<span class="presence"> offline </span>' +
                       '<div class="roster-id hidden">' + jid +
                       '</div></div></div></li>');
 
       ChatObj.insert_contact(contact);
     });
 
+    //hatObj.connection.addHandler(ChatObj.on_subscription_request, null, "presence", "subscribe");
     ChatObj.connection.addHandler(ChatObj.on_presence, null, "presence");
     ChatObj.connection.send($pres());
   },
@@ -34,18 +37,53 @@ var ChatObj = {
 
   on_presence: function(presence) {
     var presence_type = $(presence).attr('type');
-    var fr = $(presence).attr('from');
-    var jid_id = ChatObj.jid_to_id(fr);
+    var from = $(presence).attr('from');
+    var jid_id = ChatObj.jid_to_id(from);
 
-    if (presence_type === 'subscribe') {
+    console.log(presence);
+    console.log(from + ' : ' + presence_type);
 
-    } else if (presence_type !== 'error') {
-      //var contact = $('')
+    if (presence_type !== 'error') {
+      var contact = $('.list li#' + jid_id + ' .fa-circle')
+          .removeClass('online')
+          .removeClass('away')
+          .removeClass('offline')
+      if (presence_type === 'unavailable') {
+        contact.addClass('offline');
+        contact.siblings('.presence').text('offline');
+      } else {
+        var show = $(presence).find('show').text();
+        if (show === '' || show === 'chat') {
+          contact.addClass('online');
+          contact.siblings('.presence').text('online');
+        } else {
+          contact.addClass('away');
+        }
+      }
+
+      var list = contact.parent().parent().parent();
+      list.remove();
+      ChatObj.insert_contact(list);
     }
+
+    return true;
+  },
+
+  on_subscription_request: function(stanza) {
+    if (stanza.getAttribute('type') == 'subscribe') {
+      var from = $(stanza).attr('from');
+      console.log('on subscription request from=' + from);
+
+      ChatObj.connection.send($pres({
+        to: from,
+        type: 'subscribed'
+      }));
+    }
+    return true;
   },
 
   on_roster_changed: function(iq) {
-
+    return true;
   },
 
   on_message: function(message) {
