@@ -10,10 +10,6 @@ body {
   color: white;
 }
 
-.hidden {
-  display: none;
-}
-
 .container {
   margin: 0 auto;
   width: 800px;
