@@ -18,8 +18,17 @@ $(document).ready(function(){
       // Animation complete.
     });
   });
+});
 
-  $( ".member" ).click(function() {
+var messageView = function() {
+  $( ".name" ).click(function(event) {
+
+    var user = event.target.innerHTML;
+    var status = event.target.nextSibling.innerText;
+
+    $('.chat-with').text(user);
+    $('.chat-num-messages').text(status);
+
     $( "#chat-list" ).hide( "slow", function() {
       // Animation complete.
     });
@@ -33,5 +42,4 @@ $(document).ready(function(){
       // Animation complete.
     });
   });
-
-});
+}

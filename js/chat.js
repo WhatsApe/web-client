@@ -17,7 +17,7 @@ var ChatObj = {
 
       var contact = $('<li class="clearfix" id="' + jid_id + '">' +
                       '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />' +
-                      '<div class="about">' +
+                      '<div class="about member">' +
                       '<div class="name">' + name + '</div>' +
                       '<div class="status">' +
                       '<i class="fa fa-circle offline"></i>' +
@@ -28,7 +28,6 @@ var ChatObj = {
       ChatObj.insert_contact(contact);
     });
 
-    //hatObj.connection.addHandler(ChatObj.on_subscription_request, null, "presence", "subscribe");
     ChatObj.connection.addHandler(ChatObj.on_presence, null, "presence");
     ChatObj.connection.send($pres());
   },
@@ -69,25 +68,11 @@ var ChatObj = {
     return true;
   },
 
-  on_subscription_request: function(stanza) {
-    if (stanza.getAttribute('type') == 'subscribe') {
-      var from = $(stanza).attr('from');
-      console.log('on subscription request from=' + from);
-
-      ChatObj.connection.send($pres({
-        to: from,
-        type: 'subscribed'
-      }));
-    }
-    return true;
-  },
-
   on_roster_changed: function(iq) {
     return true;
   },
 
   on_message: function(message) {
-
   },
 
   scroll_chat: function(jid_id) {
@@ -100,6 +85,7 @@ var ChatObj = {
 
   insert_contact: function(element) {
     $('.list').append(element);
+    messageView();
     searchFilter.init(); // Move to a better place
   }
 

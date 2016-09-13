@@ -13,6 +13,7 @@ $(document).ready(function() {
       ChatObj.connection = null;
       $('#disconnect').hide();
     });
+
 });
 
 
