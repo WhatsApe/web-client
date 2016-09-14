@@ -13,23 +13,35 @@
     init: function() {
       this.cacheDOM();
       this.bindEvents();
-      this.render();
+      //this.render();
     },
     cacheDOM: function() {
       this.$chatHistory = $('.chat-history');
       this.$button = $('button');
       this.$textarea = $('#message-to-send');
-      this.$chatHistoryList =  this.$chatHistory.find('ul');
+    //  this.$chatHistoryList =  this.$chatHistory.find('ul#' + ChatObj.currentContact);
     },
     bindEvents: function() {
       this.$button.on('click', this.addMessage.bind(this));
       this.$textarea.on('keyup', this.addMessageEnter.bind(this));
     },
     render: function() {
+
       this.scrollToBottom();
+      this.$chatHistoryList =  this.$chatHistory.find('ul#' + ChatObj.currentContact);
+
       if (this.messageToSend.trim() !== '') {
+        if (this.$chatHistoryList.length === 0) {
+          var ul = document.createElement('UL');
+          ul.setAttribute('id', ChatObj.currentContact);
+          document.getElementsByClassName('chat-history')[0].appendChild(ul);
+          chatHistory = $('.chat-history');
+          this.$chatHistoryList = chatHistory.find('ul#' + ChatObj.currentContact);
+        }
+
         var template = Handlebars.compile( $("#message-template").html());
         var context = {
+          currentUser: ChatObj.currentUser,
           messageOutput: this.messageToSend,
           time: this.getCurrentTime()
         };
@@ -38,17 +50,17 @@
         this.scrollToBottom();
         this.$textarea.val('');
 
-        // responses
-        var templateResponse = Handlebars.compile( $("#message-response-template").html());
-        var contextResponse = {
-          response: this.getRandomItem(this.messageResponses),
-          time: this.getCurrentTime()
-        };
+        // // responses
+        // var templateResponse = Handlebars.compile( $("#message-response-template").html());
+        // var contextResponse = {
+        //   response: this.getRandomItem(this.messageResponses),
+        //   time: this.getCurrentTime()
+        // };
 
-        setTimeout(function() {
-          this.$chatHistoryList.append(templateResponse(contextResponse));
-          this.scrollToBottom();
-        }.bind(this), 1500);
+        // setTimeout(function() {
+        //   this.$chatHistoryList.append(templateResponse(contextResponse));
+        //   this.scrollToBottom();
+        // }.bind(this), 1500);
 
       }
 
@@ -96,5 +108,6 @@
   searchFilter.init();
 
   window.searchFilter = searchFilter;
+  window.chat = chat;
 
 })();

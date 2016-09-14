@@ -1,5 +1,8 @@
 var ChatObj = {
   connection: null,
+  currentUser: null,
+  currentContact: null,
+  currentStanza: null,
 
   jid_to_id: function(jid) {
     return Strophe.getBareJidFromJid(jid)
@@ -9,14 +12,16 @@ var ChatObj = {
 
   on_roster: function(iq) {
     $(iq).find('item').each(function() {
+
       var jid = $(this).attr('jid');
       var name = $(this).attr('name') || jid;
 
       var jid_id = ChatObj.jid_to_id(jid);
 
 
-      var contact = $('<li class="clearfix" id="' + jid_id + '">' +
-                      '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />' +
+
+      var contact = $('<li class="clearfix contact" id="' + jid_id + '">' +
+                      '<canvas id="' + jid_id + '-canvas" width="50" height="50"></canvas>' +
                       '<div class="about member">' +
                       '<div class="name">' + name + '</div>' +
                       '<div class="status">' +
@@ -25,7 +30,25 @@ var ChatObj = {
                       '<div class="roster-id hidden">' + jid +
                       '</div></div></div></li>');
 
-      ChatObj.insert_contact(contact);
+      ChatObj.insert_contact(contact, function() {
+        ChatObj.get(function(stanza) {
+            var $vCard = $(stanza).find("vCard");
+            var img = $vCard.find('BINVAL').text();
+            var type = $vCard.find('TYPE').text();
+            var img_src = 'data:'+type+';base64,'+img;
+            //display image using localStorage
+            var ctx = $('#' + jid_id + '-canvas').get(0).getContext('2d');
+            var img = new Image();   // Create new Image object
+            img.onload = function(){
+                // execute drawImage statements here
+                ctx.drawImage(img,0,0)
+            }
+            img.src = img_src;
+        },
+                         name );
+      });
+
+
     });
 
     ChatObj.connection.addHandler(ChatObj.on_presence, null, "presence");
@@ -72,7 +95,48 @@ var ChatObj = {
     return true;
   },
 
+  get: function(handler, jid){
+    ChatObj.connection.vcard.get(handler, jid);
+  },
+
   on_message: function(message) {
+    var full_jid = $(message).attr('from');
+    var jid = Strophe.getBareJidFromJid(full_jid);
+    var jid_id = ChatObj.jid_to_id(jid);
+    var body = $(message).find('body').text();
+
+    ChatObj.currentContact = jid_id.substring(0, jid_id.indexOf('-'));
+
+    if ($(message).find('composing').length > 0) {
+      // Display alert that contact is composing
+    } else if (body.length > 0) {
+
+      // create a ul for the current contact and ol for chat history
+
+      var chatHistory = $('.chat-history');
+      var chatHistoryList = chatHistory.find('ul#' + ChatObj.currentContact);
+
+      if (chatHistoryList.length === 0) {
+        var ul = document.createElement('UL');
+        ul.setAttribute('id', ChatObj.currentContact);
+        document.getElementsByClassName('chat-history')[0].appendChild(ul);
+        chatHistory = $('.chat-history');
+        chatHistoryList = chatHistory.find('ul#' + ChatObj.currentContact);
+      }
+
+      var templateResponse = Handlebars.compile( $("#message-response-template").html());
+      var contextResponse = {
+        from: full_jid,
+        response: body,
+        time: chat.getCurrentTime()
+      };
+
+      chatHistoryList.append(templateResponse(contextResponse));
+
+    }
+
+    console.log(message);
+    return true;
   },
 
   scroll_chat: function(jid_id) {
@@ -83,10 +147,14 @@ var ChatObj = {
 
   },
 
-  insert_contact: function(element) {
+  insert_contact: function(element, callback) {
     $('.list').append(element);
-    messageView();
+    //messageView();
     searchFilter.init(); // Move to a better place
+
+    if (callback) {
+      callback();
+    }
   }
 
 };

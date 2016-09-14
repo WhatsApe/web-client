@@ -6,6 +6,7 @@ $(document).ready(function() {
         jid: $('#username').val().toLowerCase() + '@localhost',
         password: $('#password').val()
       });
+
     });
 
     $('#disconnect').click(function() {
