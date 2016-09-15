@@ -16,6 +16,11 @@ canvas, #header-profile-image {
   border-radius: 50%;
 }
 
+.display-none {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 .hidden {
   display: none;
 }
@@ -58,13 +63,15 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
 }
 
 .container {
-  margin: 0 auto;
-  width: 800px;
-  height: 880px;
+  margin: 0 auto !important;
+  width: 800px !important;
+  height: 880px !important;
   /*background: #00776d;*/
-  background: #d5e1e0;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: #d5e1e0 !important;
+  border-radius: 5px !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .people-list {
@@ -428,12 +435,12 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
 }
 
 .clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
+  visibility: hidden !important;
+  display: block !important;
+  font-size: 0 !important;
+  content: " " !important;
+  clear: both !important;
+  height: 0 !important;
 }
 
 .button__badge {
