@@ -167,20 +167,21 @@
   };
 
   var bindEvents = function() {
-    //button.on('click', addMessage);
+    button.on('click', addMessage);
     textarea.on('keyup', addMessageEnter);
   }
 
   var addMessage = function() {
-    var message = $('#message-to-send').val();
-    render(null, ChatObj.currentUser, message);
-    $('#message-to-send').val('');
-    ChatObj.on_send(message);
+    var message = $('#message-to-send').val().replace(/\n/g, "");
+    if (message) {
+      render(null, ChatObj.currentUser, message);
+      $('#message-to-send').val('');
+      ChatObj.on_send(message);
+    }
   }
 
   var addMessageEnter = function(event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
+      if (event.which === 13) {
         addMessage();
       }
   }
