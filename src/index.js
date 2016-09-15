@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    var userObj = {};
+
     $('#login-btn').on('click', function(event) {
       event.preventDefault();
 
@@ -6,9 +9,6 @@ $(document).ready(function() {
         jid: $('#username').val().toLowerCase() + '@localhost',
         password: $('#password').val()
       });
-
-      $('#myModal').addClass('display-none');
-      $('#chat-window').removeClass('display-none');
 
     });
 
@@ -24,6 +24,7 @@ $(document).ready(function() {
     });
 
     $('#logout').click(function() {
+      userObj = {}
       ChatObj.connection.disconnect();
       ChatObj.connection = null;
       location.reload();
@@ -38,7 +39,10 @@ $(document).ready(function() {
           $(document).trigger('connected');
           ChatObj.currentUser = data.jid;
           $('.chat-with').text('Welcome '+ cleanupText(ChatObj.currentUser));
-
+          userObj = { jid: data.jid, password: data.password }
+          $('#myModal').addClass('display-none');
+          $('#chat-window').removeClass('display-none');
+          localStorage.removeItem('jabbyChatSession');
         } else if (status === Strophe.Status.DISCONNECTED) {
           $(document).trigger('disconnected');
         } else if (status === Strophe.Status.AUTHFAIL) {
@@ -63,16 +67,28 @@ $(document).ready(function() {
 
     });
 
-});
+    $(window).unload(function() {
+      localStorage.setItem('jabbyChatSession', JSON.stringify(userObj));
+      ChatObj.connection.sync = true;
+      var msg = $pres({
+        to: settings.room,
+        type: 'unavailable'
+      });
+      ChatObj.connection.send(msg);
+      ChatObj.connection.flush();
+      ChatObj.connection.disconnect();
+    });
 
+    if (localStorage.getItem('jabbyChatSession')) {
+      userObj = JSON.parse(localStorage.getItem('jabbyChatSession'));
+      console.log(userObj);
+      if (userObj.jid) {
+        console.log("true");
+        $(document).trigger('connect', {
+          jid: userObj.jid,
+          password: userObj.password
+        });
+      }
+    }
 
-$(window).unload(function() {
-  ChatObj.connection.sync = true;
-  var msg = $pres({
-    to: settings.room,
-    type: 'unavailable'
-  });
-  ChatObj.connection.send(msg);
-  ChatObj.connection.flush();
-  ChatObj.connection.disconnect();
 });
