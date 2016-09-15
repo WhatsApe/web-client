@@ -7,9 +7,6 @@ $(document).ready(function() {
         password: $('#password').val()
       });
 
-      $('#myModal').addClass('display-none');
-      $('#chat-window').removeClass('display-none');
-
     });
 
     $('#message-to-send').on('keypress', function(event) {
@@ -49,6 +46,8 @@ $(document).ready(function() {
     });
 
     $(document).bind('connected', function() {
+      $('#myModal').addClass('display-none');
+      $('#chat-window').removeClass('display-none');
       $('#disconnect').show();
 
       var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
