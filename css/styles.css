@@ -142,7 +142,7 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
 .chat .chat-history {
   padding: 30px 30px 20px;
   border-bottom: 3px solid white;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 575px;
   box-shadow: inset 1px 0px 1px 0px #f1f8f7;
   background: #f4f8f8;
@@ -191,6 +191,12 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
   padding-bottom: 20px;
   font-size: 17px;
   color: #4a7c78;
+}
+
+.chat .chat-history .welcome-view .welcome h4.on-ios {
+  font-size: 15px;
+  color: #78918f;
+  font-weight: lighter;
 }
 
 .chat .chat-history .welcome-view .welcome h4 span {
