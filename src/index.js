@@ -1,11 +1,14 @@
 $(document).ready(function() {
-    $('.login').submit(function(event) {
+    $('#login-btn').on('click', function(event) {
       event.preventDefault();
 
       $(document).trigger('connect', {
         jid: $('#username').val().toLowerCase() + '@localhost',
         password: $('#password').val()
       });
+
+      $('#myModal').addClass('display-none');
+      $('#chat-window').removeClass('display-none');
 
     });
 
@@ -20,10 +23,11 @@ $(document).ready(function() {
       }
     });
 
-    $('#disconnect').click(function() {
+    $('#logout').click(function() {
       ChatObj.connection.disconnect();
       ChatObj.connection = null;
-      $('#disconnect').hide();
+      $('#chat-window').addClass('display-none');
+      $('#myModal').removeClass('display-none');
     });
 
     $(document).bind('connect', function(ev, data) {

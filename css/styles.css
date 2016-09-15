@@ -25,12 +25,11 @@ canvas, #header-profile-image {
   display: none;
 }
 
-.name {
+.name, #logout {
   cursor: pointer;
-
 }
 
-.name:hover {
+.name:hover, #logout > p:hover {
   color: #6b2906;
 }
 
