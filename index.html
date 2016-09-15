@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <title>WhatsApe, bro?</title>
     <link rel="stylesheet" href="css/styles.css" media="screen" title="no title">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   </head>
+
   <body>
     <div id="login" style="border-radius: 5px; width: 800px; margin: 5px auto; background: #6A6C75; padding: 5px;">
       <form class="login" action="index.html" method="post" style="margin-left: 100px;" >
@@ -25,24 +27,15 @@
           <i class="fa fa-search"></i>
         </div>
         <ul class="list">
-          <!-- <li class="contact clearfix">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />
-            <div class="about member" onclick="location.href='#';" style="cursor: pointer;">
-              <div class="name">Vincent Porter</div>
-              <div class="status">
-                <i class="fa fa-circle online"></i> online
-              </div>
-            </div>
-          </li> -->
+
         </ul>
       </div> <!-- end people-list -->
 
 
 
       <div class="chat">
-        <div class="chat-header clearfix">
-          <canvas id='example' width='100' height='100'></canvas>
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
+        <div class="chat-header clearfix" id="message-header">
+          <img src=""  id="header-profile-image"/>
 
           <div class="chat-about">
             <div class="chat-with"></div>
@@ -58,95 +51,7 @@
         </div> <!-- end chat-detail chat-history -->
 
 
-
-
-        <div id="chat-list" class="chat-history">
-
-          <ul id="unordered-chat-list" >
-
-            <li>
-              <div class="message-listed" onclick="location.href='#';" style="cursor: pointer;">
-                <img  style="float:left; margin-right: 20px;" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg" alt="avatar" />
-                <div class="about"  style="overflow:auto; margin-left: 20px;">
-                  <p>
-                    <span>Mike Thomas</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Hi Vincent, how are you? How is the project coming along?
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="message-listed" onclick="location.href='#';" style="cursor: pointer;">
-                <img  style="float:left; margin-right: 20px;" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg" alt="avatar" />
-                <div class="about"  style="overflow:auto; margin-left: 20px;">
-                  <p>
-                    <span>Peyton Mckinney</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Hi Vincent, how are you? How is the project coming along?
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="message-listed" onclick="location.href='#';" style="cursor: pointer;">
-                <img  style="float:left; margin-right: 20px;" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg" alt="avatar" />
-                <div class="about"  style="overflow:auto; margin-left: 20px;">
-                  <p>
-                    <span>Erica Hughes</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Hi Vincent, how are you? How is the project coming along?
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="message-listed" onclick="location.href='#';" style="cursor: pointer;">
-                <img  style="float:left; margin-right: 20px;" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg" alt="avatar" />
-                <div class="about"  style="overflow:auto; margin-left: 20px;">
-                  <p>
-                    <span>Christian Kelly</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Hi Vincent, how are you? How is the project coming along?
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="message-listed" onclick="location.href='#';" style="cursor: pointer;">
-                <img  style="float:left; margin-right: 20px;" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg" alt="avatar" />
-                <div class="about"  style="overflow:auto; margin-left: 20px;">
-                  <p>
-                    <span>Ginger Johnson</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Hi Vincent, how are you? How is the project coming along?
-                  </p>
-                </div>
-              </div>
-            </li>
-
-          </ul>
-
-        </div> <!-- end chat-lists chat-history -->
-
         <div id="chat-message-box-replacer" class="chat-message clearfix">
-          <!-- <h1 style="text-align: center; margin-top: -5px; margin-bottom: 10px;">
-            <span style="color:red">T</span>rans<span style="color:red">p</span>oster</h1> -->
             <h1 style="text-align: center; margin-top: -5px; margin-bottom: 10px;">
               <span style="color:red">P</span>enti<span style="color:red">c</span>ast</h1>
           <h3 style="text-align: center; margin-top: 33px; ">Chat with people whose language you don't know!</h3>
@@ -162,7 +67,7 @@
           <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
           <i class="fa fa-file-image-o"></i>
 
-          <button>Send</button>
+          <button id="send-btn">Send</button>
 
         </div> <!-- end chat-message -->
 
@@ -175,26 +80,23 @@
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 
-  <!--link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/cupertino/jquery-ui.css'>
-  <!--script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js'></script!-->
-  <!--script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js'></script!-->
-  <script type="text/javascript" src="js/strophe.js"></script>
-  <script src="js/strophe.vcard.js"></script>
-  <script type="text/javascript" src="js/chat.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
-  <script type="text/javascript" src="js/binds.js"></script>
-  <script type="text/javascript" src="js/views.js"></script>
-  <script type="text/javascript" src="js/scripts.js"></script>
+
+  <script type="text/javascript" src="src/strophe.js"></script>
+  <script src="src/strophe.vcard.js"></script>
+  <script type="text/javascript" src="src/chat.js"></script>
+  <script type="text/javascript" src="src/index.js"></script>
+  <script type="text/javascript" src="src/views.js"></script>
+  <script type="text/javascript" src="src/search.js"></script>
 
 
   <script id="message-template" type="text/x-handlebars-template">
     <li class="clearfix">
       <div class="message-data align-right">
         <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
-        <span class="message-data-name" >{{currentUser}}</span> <i class="fa fa-circle me"></i>
+        <span class="message-data-name" >{{from}}</span> <i class="fa fa-circle me"></i>
       </div>
       <div class="message other-message float-right">
-        {{messageOutput}}
+        {{response}}
       </div>
     </li>
   </script>
@@ -210,5 +112,13 @@
       </div>
     </li>
   </script>
+
+  <script id="new-message-count" type="text/x-handlebars-template">
+    <div class="button">
+      <i class="fa fa-comments"></i>
+      <span class="button__badge">{{count}}</span>
+    </div>
+  </script>
+
   </body>
 </html>
