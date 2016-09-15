@@ -26,8 +26,7 @@ $(document).ready(function() {
     $('#logout').click(function() {
       ChatObj.connection.disconnect();
       ChatObj.connection = null;
-      $('#chat-window').addClass('display-none');
-      $('#myModal').removeClass('display-none');
+      location.reload();
     });
 
     $(document).bind('connect', function(ev, data) {

@@ -171,7 +171,6 @@
   var bindEvents = function() {
     button.on('click', addMessage);
     textarea.on('keyup', addMessageEnter);
-    textarea.on('keyup', noMessages);
   }
 
   var addMessage = function() {
@@ -231,9 +230,6 @@
 
     var chatHistoryList = chatHistory.find('ul#' + currentContact);
 
-    // if (chatHistoryList.length === 0) {
-    //   chatHistoryList = createContactView(currentContact);
-    // }
 
     if (messageType === 'received') {
       templateResponse = Handlebars.compile( $("#message-response-template").html());
