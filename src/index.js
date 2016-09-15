@@ -9,6 +9,17 @@ $(document).ready(function() {
 
     });
 
+    $('#message-to-send').on('keypress', function(event) {
+      var composing = $(this).parent().data('composing');
+      if (!composing) {
+        var notify = $msg({to: (ChatObj.currentContact + '@localhost').toLowerCase(),
+                                "type": "chat"})
+                      .c('composing', {xmlns: "http://jabber.org/protocol/chatstates"});
+        ChatObj.connection.send(notify);
+        $(this).parent().data('composing', true);
+      }
+    });
+
     $('#disconnect').click(function() {
       ChatObj.connection.disconnect();
       ChatObj.connection = null;

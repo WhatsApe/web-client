@@ -29,8 +29,14 @@
     $( "#chat-list" ).hide( "slow", function() {});
 
     $( "#chat-details" ).show( "slow", function() {
-      $("#chat-details > ul").not('#' + $('.chat-with').text()).hide();
-      $('ul#' + $('.chat-with').text()).show();
+      var contact = $('.chat-with').text();
+
+      $("#chat-details > ul").not('#' + contact).hide();
+
+      $('ul#' + contact).show();
+
+      noMessages(contact);
+
     });
 
     $( "#chat-message-box-replacer" ).hide( "slow", function() {});
@@ -48,5 +54,6 @@
     }
   }
 
+  window.imageFromStorage = imageFromStorage;
 
 })();

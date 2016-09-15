@@ -20,6 +20,15 @@ canvas, #header-profile-image {
   display: none;
 }
 
+.name {
+  cursor: pointer;
+
+}
+
+.name:hover {
+  color: #6b2906;
+}
+
 #login {
   border-radius: 5px;
   width: 800px;

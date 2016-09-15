@@ -58,6 +58,7 @@
                   var canvas = document.getElementById(firstName + '-canvas');
                   var imgAsDataURL = canvas.toDataURL("image/png")
                   localStorage.setItem(firstName, imgAsDataURL);
+                  imageFromStorage(ChatObj.currentUser);
               }
               img.src = img_src;
           },
@@ -131,23 +132,24 @@
       var jid_id = ChatObj.jid_to_id(jid);
       var body = $(message).find('body').text();
 
-      ChatObj.currentContact = capitalize_Words(jid_id.substring(0, jid_id.indexOf('-')));
+      var currentContact = capitalize_Words(jid_id.substring(0, jid_id.indexOf('-')));
 
       if ($(message).find('composing').length > 0) {
-        $('ul#' + ChatObj.currentContact).append(
+        $('ul#' + currentContact).append(
                 "<li class='typing'>" +
                 Strophe.getNodeFromJid(jid) +
                 " is typing...</li>");
 
         scrollToBottom();
       } else if (body.length > 0) {
-          render('received', full_jid, body);
+          render('received', full_jid, body, null, currentContact);
+          noMessages(currentContact);
       }
 
       console.log(message);
 
       if ($(message).find('paused').length > 0 || body.length > 0) {
-          $('ul#' + ChatObj.currentContact + ' > li.typing').remove();
+          $('ul#' + currentContact + ' > li.typing').remove();
       }
 
       return true;
@@ -169,6 +171,7 @@
   var bindEvents = function() {
     button.on('click', addMessage);
     textarea.on('keyup', addMessageEnter);
+    textarea.on('keyup', noMessages);
   }
 
   var addMessage = function() {
@@ -218,16 +221,19 @@
   }
 
 
-  var render = function(messageType, msgFrom, body, time) {
+  var render = function(messageType, msgFrom, body, time, currentContact) {
+    currentContact = currentContact || ChatObj.currentContact;
+
     var templateResponse;
     var msgFrom = capitalize_Words(msgFrom.split('@')[0]);
-    var currentContact = cleanupText(ChatObj.currentContact);
+
+    currentContact = cleanupText(currentContact);
 
     var chatHistoryList = chatHistory.find('ul#' + currentContact);
 
-    if (chatHistoryList.length === 0) {
-      chatHistoryList = createContactView(currentContact);
-    }
+    // if (chatHistoryList.length === 0) {
+    //   chatHistoryList = createContactView(currentContact);
+    // }
 
     if (messageType === 'received') {
       templateResponse = Handlebars.compile( $("#message-response-template").html());
@@ -253,8 +259,20 @@
     localStorage.setItem(itemName, dataURL);
   }
 
+  function noMessages(contact) {
+    if (contact !== ChatObj.currentContact) return;
+
+    if ($('ul#' + ChatObj.currentContact + ' li').length > 0) {
+      $('#no-messages').addClass('hidden');
+    } else {
+      $('#no-messages').removeClass('hidden');
+    }
+  }
+
   bindEvents();
+
   window.ChatObj = ChatObj;
   window.cleanupText = cleanupText;
+  window.noMessages = noMessages;
 
 })();
