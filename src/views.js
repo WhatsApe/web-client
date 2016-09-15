@@ -4,10 +4,12 @@
 
   $(document).ready(function() {
 
+    $('#chat-details').hide();
+    $('#chat-message-box').hide();
+
     $( "ul" ).on('click', 'li > .about > .name', function(event) {
       contactUser = event.target.innerHTML;
       var status = event.target.nextSibling.innerText;
-
       render();
 
     });
@@ -38,7 +40,12 @@
   function imageFromStorage(key) {
     var picture = localStorage.getItem(key);
     var image = document.createElement('img');
-    var header = document.getElementById('header-profile-image').src = picture;
+
+    if (picture) {
+      document.getElementById('header-profile-image').src = picture;
+    } else {
+      document.getElementById('header-profile-image').src = 'images/jabby-70x85.png';
+    }
   }
 
 

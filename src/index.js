@@ -23,7 +23,7 @@ $(document).ready(function() {
         if(status === Strophe.Status.CONNECTED) {
           $(document).trigger('connected');
           ChatObj.currentUser = data.jid;
-          $('.chat-with').text(ChatObj.currentUser);
+          $('.chat-with').text('Welcome '+ cleanupText(ChatObj.currentUser));
 
         } else if (status === Strophe.Status.DISCONNECTED) {
           $(document).trigger('disconnected');

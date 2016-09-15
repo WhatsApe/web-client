@@ -6,10 +6,15 @@
     <title>WhatsApe, bro?</title>
     <link rel="stylesheet" href="css/styles.css" media="screen" title="no title">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
   </head>
 
   <body>
-    <div id="login" style="border-radius: 5px; width: 800px; margin: 5px auto; background: #6A6C75; padding: 5px;">
+
+    <div id="login">
+      <img id="logo-jabby" src="images/jabby-70x85.png" alt=""  style="width: 60px; height: 75px;"/>
+      <img id="logo-text" src="images/jabb-chat-text-plain.png" alt=""  style="width: 260px; height: 60px;" />
+
       <form class="login" action="index.html" method="post" style="margin-left: 100px;" >
         <label for="username">Username</label>
         <input type="text" name="username" id="username">
@@ -17,9 +22,9 @@
         <input type="text" name="password" id="password">
         <input type="submit" name="submit" value="Connect to Chat">
       </form>
-
       <button class="hidden" id="disconnect">Disconnect</button>
     </div>
+
     <div class="container clearfix">
       <div class="people-list" id="people-list">
         <div class="search">
@@ -27,10 +32,8 @@
           <i class="fa fa-search"></i>
         </div>
         <ul class="list">
-
         </ul>
       </div> <!-- end people-list -->
-
 
 
       <div class="chat">
@@ -38,25 +41,60 @@
           <img src=""  id="header-profile-image"/>
 
           <div class="chat-about">
-            <div class="chat-with"></div>
-            <div class="chat-num-messages"></div>
+           <div class="chat-with"></div>
+           <div class="chat-num-messages"></div>
+         </div>
+
+          <div id="logout" >
+            <p>
+              | Log out |
+            </p>
           </div>
-          <i class="fa fa-star"></i>
         </div> <!-- end chat-header -->
-
-
 
         <div id="chat-details" class="chat-history">
 
         </div> <!-- end chat-detail chat-history -->
 
+        <!-- CHAT HISTORY with CHAT LIST -->
+        <div id="chat-list" class="chat-history">
+          <div class="welcome-view">
+            <div class="welcome">
+              <h1>WELCOME</h1>
+              <h4>
+                Meet <span>Jabby</span>, the cool ape ...
+              </h4>
+              <p>Messaging accross platforms.
+              <!-- <br><br>Completely <em>free</em>, totaly <em>uncenssored</em>. -->
+              <br><br>Free and uncenssored.
+              <br><br><em>Seamless translation.</em>
+              <!-- <br><br>Seamless translation. -->
+            <br><br>  One application: <strong>JabbyChat</strong>.</p>
+
+              <p class="narrow">
+                <!-- Meet Jabby, the cool ape at JabbyChat! She will be the only 'person'
+                looking over your shoulder. But she will do so only to translate all messages for you and your friends. -->
+              </p>
+              <p class="narrow">
+                ENJOY!
+              </p>
+              <h4 class="on-ios">Available also for <a href="#"><span>download</span></a> on the IOS platform</h4>
+
+            </div>
+          </div>
+        </div>
+        <!-- END CHAT HISTORY with CHAT LIST -->
 
         <div id="chat-message-box-replacer" class="chat-message clearfix">
-            <h1 style="text-align: center; margin-top: -5px; margin-bottom: 10px;">
-              <span style="color:red">P</span>enti<span style="color:red">c</span>ast</h1>
-          <h3 style="text-align: center; margin-top: 33px; ">Chat with people whose language you don't know!</h3>
-          <p style="text-align: center; margin-bottom: -15px; ">
-            Copyright &copy; 2016 - Da Boyz at Makers Academy
+          <div class="for-image">
+            <!-- background image here  -->
+          </div>
+
+          <h3 style="color:#4a7c78;">
+            For your free, uncensored messaging and chat
+          </h3>
+          <p style="text-align: center; margin-bottom: -15px; color: #888; font-size: 12px; ">
+            Copyright &copy; 2016 - The JabbyChat Team at Makers Academy
           </p>
         </div> <!-- end chat-message -->
 
@@ -95,8 +133,13 @@
         <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
         <span class="message-data-name" >{{from}}</span> <i class="fa fa-circle me"></i>
       </div>
+
       <div class="message other-message float-right">
         {{response}}
+        <hr />
+        <span style="color:#7e7e7e;">translating into Spanish ...</span>
+        <br />
+        <span style="color:#ddeae9;"><em>{{response}}</em></span>
       </div>
     </li>
   </script>
@@ -108,8 +151,13 @@
         <span class="message-data-time">{{time}}, Today</span>
       </div>
       <div class="message my-message">
+        <span style="color:#d3e0df;"><em>{{response}}</em></span>
+        <hr />
+        <span style="color:#7e7e7e;">translating from Spanish ...</span>
+        <br />
         {{response}}
       </div>
+
     </li>
   </script>
 

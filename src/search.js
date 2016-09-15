@@ -14,8 +14,6 @@
     }
   };
 
-  searchFilter.init();
-
   window.searchFilter = searchFilter;
 
 })();

@@ -11,6 +11,10 @@
     currentContact: null,
     currentStanza: null,
 
+    currentCon: function() {
+      return capitalize_Words(ChatObj.currentContact);
+    },
+
     jid_to_id: function(jid) {
       return Strophe.getBareJidFromJid(jid)
           .replace(/@/g, "-")
@@ -46,11 +50,11 @@
               var img_src = 'data:'+type+';base64,'+img;
 
               var ctx = $('#' + firstName + '-canvas').get(0).getContext('2d');
-              ctx.scale(0.60,0.60);
+              //ctx.scale(0.75,0.75);
 
               var img = new Image();
               img.onload = function(){
-                  ctx.drawImage(img,0,0);
+                  ctx.drawImage(img, 0, 0, 55, img.height * (55/img.width));
                   var canvas = document.getElementById(firstName + '-canvas');
                   var imgAsDataURL = canvas.toDataURL("image/png")
                   localStorage.setItem(firstName, imgAsDataURL);
@@ -142,7 +146,7 @@
 
       console.log(message);
 
-      if ($(message).find('paused').length > 0) {
+      if ($(message).find('paused').length > 0 || body.length > 0) {
           $('ul#' + ChatObj.currentContact + ' > li.typing').remove();
       }
 
@@ -250,5 +254,6 @@
 
   bindEvents();
   window.ChatObj = ChatObj;
+  window.cleanupText = cleanupText;
 
 })();
