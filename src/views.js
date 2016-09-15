@@ -1,6 +1,13 @@
-(function() {
+(function(exports) {
 
   var contactUser;
+
+  function cleanUpChatView() {
+    $('#people-list > ul').empty();
+    contactUser = '';
+    $('#chat-details').hide();
+    $('#chat-message-box').hide();
+  }
 
   $(document).ready(function() {
 
@@ -56,4 +63,6 @@
 
   window.imageFromStorage = imageFromStorage;
 
-})();
+  exports.cleanUpChatView = cleanUpChatView;
+
+})(this);

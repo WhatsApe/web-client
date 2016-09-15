@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $('.login').submit(function(event) {
+
+    $('#login-button').click(function(event) {
       event.preventDefault();
 
       $(document).trigger('connect', {
@@ -20,13 +21,17 @@ $(document).ready(function() {
       }
     });
 
-    $('#disconnect').click(function() {
+    $('#logout-button').click(function() {
+      cleanUpChatView();
       ChatObj.connection.disconnect();
       ChatObj.connection = null;
       $('#disconnect').hide();
+      $('#myModal').removeClass('display-none');
+      $('.container').addClass('display-none');
     });
 
     $(document).bind('connect', function(ev, data) {
+      console.log("Connecting...");
       var conn = new Strophe.Connection(
           'http://31.3.250.10:5280/http-bind');
 
@@ -35,6 +40,8 @@ $(document).ready(function() {
           $(document).trigger('connected');
           ChatObj.currentUser = data.jid;
           $('.chat-with').text('Welcome '+ cleanupText(ChatObj.currentUser));
+          $('#myModal').addClass('display-none');
+          $('.container').removeClass('display-none');
 
         } else if (status === Strophe.Status.DISCONNECTED) {
           $(document).trigger('disconnected');
