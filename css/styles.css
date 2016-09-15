@@ -5,7 +5,9 @@
 
 body {
   background: #faffff;
-  font: 14px/20px "Lato", Arial, sans-serif;
+  /*font: 14px/20px "Helvetica", Arial, sans-serif;*/
+  font: 14px/20px;
+  font-family: 'Ubuntu', sans-serif;
   padding: 40px 0;
   color: white;
 }
@@ -126,7 +128,6 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
   font-weight: bold;
   font-size: 16px;
   color: #00776d;
-  /*-webkit-text-stroke: .2px #6b2906;*/
 }
 .chat .chat-header .chat-num-messages {
   color: #92959E;
@@ -174,12 +175,12 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
   width: 100%;
   text-align: center;
   margin: 0 auto;
-  margin-top: 20%;
-  margin-bottom: 50px;
+  margin-top: 15%;
+  margin-bottom: 35px;
   padding-bottom: 20px;
-  font-size: 40px;
-  color: #2eaea3;
-  -webkit-text-stroke: 1px #6b2906;
+  font-size: 35px;
+  color: #4a7c78;
+  /*-webkit-text-stroke: 1px #6b2906;*/
 }
 
 .chat .chat-history .welcome-view .welcome h4 {
@@ -190,7 +191,6 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
   padding-bottom: 20px;
   font-size: 17px;
   color: #4a7c78;
-  -webkit-text-stroke: .1px #6b2906;
 }
 
 .chat .chat-history .welcome-view .welcome h4 span {
@@ -213,10 +213,11 @@ display:inline-block; margin-left: 20px; margin-bottom: 5px;
   text-align: center;
   margin: 0 auto;
   margin-top: 5%;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   font-size: 17px;
-  color:  #6b2906;
-  -webkit-text-stroke: .3px #2eaea3;
+  color:  #4d726f;
+  line-height: 1.2;
+  /*-webkit-text-stroke: .3px #2eaea3;*/
 }
 
 .chat .chat-history .welcome-view .welcome p.narrow {
