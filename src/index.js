@@ -53,6 +53,9 @@ $(document).ready(function() {
     });
 
     $(document).bind('connected', function() {
+      $('#myModal').addClass('display-none');
+      $('#chat-window').removeClass('display-none');
+      $('#login').removeClass('display-none');
       $('#disconnect').show();
 
       var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
