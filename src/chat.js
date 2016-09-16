@@ -237,14 +237,18 @@
       templateResponse = Handlebars.compile( $("#message-template").html());
     }
 
-    var contextResponse = {
-      from: msgFrom,
-      response: body,
-      time: getCurrentTime()
-    };
+    translate(body, function(translation) {
+      var contextResponse = {
+        from: msgFrom,
+        response: body,
+        time: getCurrentTime(),
+        translation: translation
+      };
 
-    chatHistoryList.append(templateResponse(contextResponse));
-    scrollToBottom();
+      chatHistoryList.append(templateResponse(contextResponse));
+      scrollToBottom();
+    })
+
   }
 
   function storeImage(id, itemName) {
@@ -263,6 +267,12 @@
     } else {
       $('#no-messages').removeClass('hidden');
     }
+  }
+
+  function translate(message, callback) {
+    $.ajax('https://www.googleapis.com/language/translate/v2?key= AIzaSyD1j1i79DcdJOuW0iJA7ZOfoQiF_YG8twU&source=en&target=de&q=' + message).success(function(response) {
+        callback(response.data.translations[0].translatedText);
+      });
   }
 
   bindEvents();
