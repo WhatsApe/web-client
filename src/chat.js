@@ -233,10 +233,10 @@
     var translateOptions;
     if (messageType === 'received') {
       templateResponse = Handlebars.compile( $("#message-response-template").html());
-      translateOptions = { from: 'es', to: 'en' }
+      translateOptions = { from: 'ro', to: 'en' }
     } else {
       templateResponse = Handlebars.compile( $("#message-template").html());
-      translateOptions = { from: 'en', to: 'es' }
+      translateOptions = { from: 'en', to: 'ro' }
     }
 
     translate(body, translateOptions, function(translation) {
