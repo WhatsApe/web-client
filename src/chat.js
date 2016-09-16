@@ -230,21 +230,27 @@
 
     var chatHistoryList = chatHistory.find('ul#' + currentContact);
 
-
+    var translateOptions;
     if (messageType === 'received') {
       templateResponse = Handlebars.compile( $("#message-response-template").html());
+      translateOptions = { from: 'es', to: 'en' }
     } else {
       templateResponse = Handlebars.compile( $("#message-template").html());
+      translateOptions = { from: 'en', to: 'es' }
     }
 
-    var contextResponse = {
-      from: msgFrom,
-      response: body,
-      time: getCurrentTime()
-    };
+    translate(body, translateOptions, function(translation) {
+      var contextResponse = {
+        from: msgFrom,
+        response: body,
+        time: getCurrentTime(),
+        translation: translation
+      };
 
-    chatHistoryList.append(templateResponse(contextResponse));
-    scrollToBottom();
+      chatHistoryList.append(templateResponse(contextResponse));
+      scrollToBottom();
+    })
+
   }
 
   function storeImage(id, itemName) {
@@ -263,6 +269,12 @@
     } else {
       $('#no-messages').removeClass('hidden');
     }
+  }
+
+  function translate(message, options, callback) {
+    $.ajax('https://www.googleapis.com/language/translate/v2?key= AIzaSyD1j1i79DcdJOuW0iJA7ZOfoQiF_YG8twU&source=' + options.from + '&target=' + options.to + '&q=' + message).success(function(response) {
+        callback(response.data.translations[0].translatedText);
+      });
   }
 
   bindEvents();
