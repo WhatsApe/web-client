@@ -230,14 +230,16 @@
 
     var chatHistoryList = chatHistory.find('ul#' + currentContact);
 
-
+    var translateOptions;
     if (messageType === 'received') {
       templateResponse = Handlebars.compile( $("#message-response-template").html());
+      translateOptions = { from: 'es', to: 'en' }
     } else {
       templateResponse = Handlebars.compile( $("#message-template").html());
+      translateOptions = { from: 'en', to: 'es' }
     }
 
-    translate(body, function(translation) {
+    translate(body, translateOptions, function(translation) {
       var contextResponse = {
         from: msgFrom,
         response: body,
@@ -269,8 +271,8 @@
     }
   }
 
-  function translate(message, callback) {
-    $.ajax('https://www.googleapis.com/language/translate/v2?key= AIzaSyD1j1i79DcdJOuW0iJA7ZOfoQiF_YG8twU&source=en&target=de&q=' + message).success(function(response) {
+  function translate(message, options, callback) {
+    $.ajax('https://www.googleapis.com/language/translate/v2?key= AIzaSyD1j1i79DcdJOuW0iJA7ZOfoQiF_YG8twU&source=' + options.from + '&target=' + options.to + '&q=' + message).success(function(response) {
         callback(response.data.translations[0].translatedText);
       });
   }
